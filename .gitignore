@@ -1,3 +1,2 @@
-IDM.*
-base_municipios.*
-INEGI.*
+/data/*
+!/data/homicides.*
