@@ -3,8 +3,7 @@ a {
   cursor: pointer;
 }
 
-html,
-body {
+html, body {
   font-family: 'Roboto Condensed';
   height: 100%;
   margin: 0;
@@ -36,6 +35,7 @@ h1, h3 {
 
 * {
   border: thin solid red;
+  background-color: #d1e4ec;
 }
 
 #app {
@@ -43,12 +43,45 @@ h1, h3 {
 }
 
 .sidebar {
-  background-color: linen;
   padding: 10px;
   width: 300px;
 }
 
-.main-area {
-  align-items: center;
-  justify-content: center;
+.plot-area {
+    align-items: center;
+    justify-content: center;
+}
+
+line {
+  stroke-width: 2px;
+}
+.axis, .tick text {
+  font-size: 21px;
+}
+
+
+.ylabel, .xlabel {
+  text-anchor: middle;
+  font-size: 20px;
+  fill: #635F5D;
+}
+
+.nw {
+  fill: #ca9a4f;
+}
+
+.west {
+  fill: #88a2b1;
+}
+
+.central {
+  fill: #135a90;
+}
+
+.ne {
+  fill: #28aabe;
+}
+
+.se {
+  fill: #10868d;
 }
