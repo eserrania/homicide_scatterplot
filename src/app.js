@@ -18,10 +18,9 @@ domReady(() => {
 function app(data, article) {
   function render() {
     select('.sidebar').text(article[2018]);
-    scatterplot(data, 2018, 2019);
+    scatterplot(data);
   }
   
   render();
  }
 
- 

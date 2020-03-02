@@ -7,13 +7,13 @@ html, body {
   font-family: 'Roboto Condensed';
   height: 100%;
   margin: 0;
-  padding: 0;
+  padding: 10;
   width: 100%;
 }
 
 h1, h3 {
-  padding: 0;
-  margin: 0;
+  padding: 10;
+  margin-top: 0;
 }
 
 .flex {
@@ -34,54 +34,46 @@ h1, h3 {
 }
 
 * {
-  border: thin solid red;
+  /* border: thin solid red; */
   background-color: #d1e4ec;
 }
 
 #app {
-  padding: 50px 50px;
+  padding: 30px 30px;
 }
 
 .sidebar {
-  padding: 10px;
-  width: 300px;
+  padding-top: 50px; 
+  width: 400px;
+  font-size: 20px;
+}
+
+.main-area {
+  justify-content: center;
 }
 
 .plot-area {
-    align-items: center;
     justify-content: center;
 }
 
-line {
-  stroke-width: 2px;
+.source {
+  justify-content: flex-end;
 }
-.axis, .tick text {
-  font-size: 21px;
+
+.axis, .tick {
+  font-size: 20px;
+}
+
+.legend-text {
+  font-size: 20px;
 }
 
 
 .ylabel, .xlabel {
   text-anchor: middle;
-  font-size: 20px;
-  fill: #635F5D;
+  font-size: 25px;
 }
 
-.nw {
-  fill: #ca9a4f;
-}
-
-.west {
-  fill: #88a2b1;
-}
-
-.central {
-  fill: #135a90;
-}
-
-.ne {
-  fill: #28aabe;
-}
-
-.se {
-  fill: #10868d;
+select {
+  display: flex;
 }
