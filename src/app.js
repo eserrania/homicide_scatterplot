@@ -1,23 +1,25 @@
-// if the data you are going to import is small, then you can import it using es6 import
-// import MY_DATA from './app/data/example.json'
-// (I tend to think it's best to use screaming snake case for imported json)
 const domReady = require('domready');
+import {select} from 'd3-selection';
+import {csv, json} from 'd3-fetch';
+import './stylesheets/main.css';
+import scatterplot from './scatterplot';
+
 
 domReady(() => {
-  // this is just one example of how to import data. there are lots of ways to do it!
-  fetch('./data/example.json')
-    .then(response => response.json())
-    .then(data => myVis(data))
-    .catch(e => {
-      console.log(e);
-    });
+  Promise.all([
+    csv('./data/homicides.csv'),
+    json('./data/text.json'),
+  ]).then(d => {
+    const [data, article] = d;
+    app(data, article);
+  });
 });
 
-function myVis(data) {
-  // portrait
-  const width = 5000;
-  const height = (36 / 24) * width;
-  console.log(data, height);
-  console.log('Hi!');
-  // EXAMPLE FIRST FUNCTION
-}
+function app(data, article) {
+  function render() {
+    select('.sidebar').text(article[2018]);
+    scatterplot(data, 2018, 2019);
+  }
+  
+  render();
+ }

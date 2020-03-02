@@ -1,2 +1,3 @@
 /data/*
 !/data/homicides.*
+node_modules

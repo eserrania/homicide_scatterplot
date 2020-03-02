@@ -5,10 +5,50 @@ a {
 
 html,
 body {
-  background: #D6D6CE;
-  font-family: Verdana, Geneva, sans-serif;
+  font-family: 'Roboto Condensed';
   height: 100%;
   margin: 0;
   padding: 0;
   width: 100%;
+}
+
+h1, h3 {
+  padding: 0;
+  margin: 0;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-down {
+  display: flex;
+  flex-direction: column;
+}
+
+.full-height {
+  height: 100%;
+}
+
+.full-width {
+  width: 100%;
+}
+
+* {
+  border: thin solid red;
+}
+
+#app {
+  padding: 50px 50px;
+}
+
+.sidebar {
+  background-color: linen;
+  padding: 10px;
+  width: 300px;
+}
+
+.main-area {
+  align-items: center;
+  justify-content: center;
 }
