@@ -45,7 +45,6 @@ h3 {
 }
 
 .sidebar {
-  padding-top: 50px;
   width: 400px;
   font-size: 20px;
 }
@@ -124,6 +123,11 @@ h3 {
   margin: -1px 0 0 0;
   top: 100%;
   left: 0;
+}
+
+.xtext,
+.ytext {
+  margin-top: 50px;
 }
 
 .menu {

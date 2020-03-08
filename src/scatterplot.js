@@ -4,7 +4,7 @@ import { axisLeft, axisBottom } from "d3-axis";
 import { transition } from "d3-transition";
 import d3Tip from "d3-tip";
 
-export default function scatterplot(data) {
+export default function scatterplot(data, article) {
   const years = [2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019];
   const sizes = ["All", "Large", "Medium", "Small"];
 
@@ -14,10 +14,13 @@ export default function scatterplot(data) {
   const margin = { top: 50, right: 200, bottom: 100, left: 50 };
 
   const state = {
-    xyear: 2018,
-    yyear: 2019,
+    xyear: 2011,
+    yyear: 2012,
     size: "All"
   };
+
+  var xText = select(".xtext").text(article[state.xyear]);
+  var yText = select(".ytext").text(article[state.yyear]);
 
   var xLabel =
     "Homicides per 100k inhabitants (" + state.xyear.toString() + ")";
@@ -116,6 +119,8 @@ export default function scatterplot(data) {
       var filteredData = filterData();
 
       var xLabels = svg.selectAll(".xlabel").data([xLabel]);
+      var xText = select(".xtext").text(article[state.xyear]);
+
       xLabels
         .enter()
         .append("text")
@@ -164,6 +169,7 @@ export default function scatterplot(data) {
       state.yyear = this.value;
       update();
       var filteredData = filterData();
+      var yText = select(".ytext").text(article[state.yyear]);
 
       var yLabels = svg.selectAll(".ylabel").data([yLabel]);
       yLabels
