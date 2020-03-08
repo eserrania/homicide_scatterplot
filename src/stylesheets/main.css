@@ -1,19 +1,21 @@
-
 a {
   cursor: pointer;
 }
 
-html, body {
-  font-family: 'Roboto Condensed';
+html,
+body {
+  font-family: "Roboto Condensed";
   height: 100%;
   margin: 0;
   padding: 10;
   width: 100%;
 }
 
-h1, h3 {
+h1,
+h3 {
   padding: 10;
   margin-top: 0;
+  font-weight: bold;
 }
 
 .flex {
@@ -43,7 +45,7 @@ h1, h3 {
 }
 
 .sidebar {
-  padding-top: 50px; 
+  padding-top: 50px;
   width: 400px;
   font-size: 20px;
 }
@@ -53,27 +55,77 @@ h1, h3 {
 }
 
 .plot-area {
-    justify-content: center;
+  justify-content: center;
 }
 
 .source {
   justify-content: flex-end;
 }
 
-.axis, .tick {
+.axis,
+.tick {
   font-size: 20px;
 }
 
 .legend-text {
-  font-size: 20px;
+  font-size: 18px;
 }
 
-
-.ylabel, .xlabel {
+.ylabel,
+.xlabel {
   text-anchor: middle;
   font-size: 25px;
 }
 
-select {
-  display: flex;
+.drop-down {
+  justify-content: center;
+}
+
+.menu {
+  margin-right: 20px;
+}
+
+.drop-down-label {
+  margin-right: 5px;
+  font-size: 20px;
+}
+
+.legend-title {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.circle:hover {
+  opacity: 1;
+  stroke-width: 2;
+  stroke: black;
+}
+
+.d3-tip {
+  line-height: 1;
+  padding: 12px;
+  background: linen;
+  border-radius: 2px;
+  font-size: 14px;
+}
+
+.d3-tip:after {
+  box-sizing: border-box;
+  display: inline;
+  font-size: 10px;
+  width: 100%;
+  line-height: 1;
+  color: linen;
+  position: absolute;
+  text-align: center;
+}
+
+.d3-tip.n:after {
+  margin: -1px 0 0 0;
+  top: 100%;
+  left: 0;
+}
+
+.menu {
+  background-color: linen;
 }
