@@ -35,8 +35,8 @@ h3 {
   width: 100%;
 }
 
-* {
-  /* border: thin solid red; */
+body,
+html {
   background-color: #d1e4ec;
 }
 

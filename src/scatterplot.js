@@ -134,7 +134,7 @@ export default function scatterplot(data, article) {
       updateTip();
 
       g.selectAll("circle")
-        .data(filteredData)
+        .data(filteredData, d => d.key)
         .transition()
         .duration(1000)
         .attr("cx", d => xScale(xValue(d)))
@@ -189,7 +189,7 @@ export default function scatterplot(data, article) {
       updateTip();
 
       g.selectAll("circle")
-        .data(filteredData)
+        .data(filteredData, d => d.key)
         .transition()
         .duration(1000)
         .attr("cx", d => xScale(xValue(d)))
@@ -226,7 +226,7 @@ export default function scatterplot(data, article) {
       var filteredData = filterData();
       updateTip();
 
-      var circles = g.selectAll("circle").data(filteredData);
+      var circles = g.selectAll("circle").data(filteredData, d => d.key);
       circles.exit().remove();
 
       circles
@@ -350,7 +350,7 @@ export default function scatterplot(data, article) {
       );
     });
 
-  var circles = g.selectAll("circle").data(filteredData);
+  var circles = g.selectAll("circle").data(filteredData, d => d.key);
   circles.exit().remove();
 
   circles
