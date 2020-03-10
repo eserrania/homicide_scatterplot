@@ -53,6 +53,10 @@ export default function scatterplot(data, article) {
     return newData;
   }
 
+  function numberWithCommas(x) {
+    return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+  }
+
   function update() {
     xLabel = "Homicides per 100k inhabitants (" + state.xyear.toString() + ")";
     yLabel = "Homicides per 100k inhabitants (" + state.yyear.toString() + ")";
@@ -96,7 +100,7 @@ export default function scatterplot(data, article) {
           state.yyear.toString() +
           " population:" +
           "</strong> <span style='color:black'>" +
-          d[ypop] +
+          numberWithCommas(d[ypop]) +
           "</span>"
         );
       });
@@ -345,7 +349,7 @@ export default function scatterplot(data, article) {
         state.yyear.toString() +
         " population:" +
         "</strong> <span style='color:black'>" +
-        d[ypop] +
+        numberWithCommas(d[ypop]) +
         "</span>"
       );
     });
