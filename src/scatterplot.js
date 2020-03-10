@@ -14,8 +14,8 @@ export default function scatterplot(data, article) {
   const margin = { top: 50, right: 200, bottom: 100, left: 50 };
 
   const state = {
-    xyear: 2011,
-    yyear: 2012,
+    xyear: 2018,
+    yyear: 2019,
     size: "All"
   };
 
