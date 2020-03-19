@@ -2,9 +2,10 @@ import { select } from "d3-selection";
 import { scaleLog, scaleSqrt, scaleOrdinal, scaleLinear } from "d3-scale";
 import { axisLeft, axisBottom } from "d3-axis";
 import { transition } from "d3-transition";
+import { geoPath, geoAlbersUsa } from "d3-geo";
 import d3Tip from "d3-tip";
 
-export default function scatterplot(data, article) {
+export default function scatterplot(data, article, states, muns) {
   const years = [2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019];
   const sizes = ["All", "Large", "Medium", "Small"];
 
@@ -19,8 +20,34 @@ export default function scatterplot(data, article) {
     size: "All"
   };
 
+  const colorDomain = Array.from(
+    data.reduce((acc, row) => acc.add(row.region), new Set())
+  );
+
+  const colorRange = ["#88a2b1", "#ca9a4f", "#10868d", "#855191", "#135a90"];
+  const colorScale = scaleOrdinal(colorDomain).range(colorRange);
+
+  const projection = geoAlbersUsa();
+  const geoGenerator = geoPath(projection);
+
+  const map = select(".map-area")
+    .attr("width", 300)
+    .attr("height", 200);
+
+  map
+    .selectAll(".map-states")
+    .data(states.features)
+    .enter()
+    .append("path")
+    .attr("class", "map-states")
+    .attr("stroke", "black")
+    .attr("fill", d => colorScale(d.properties.region))
+    .attr("d", d => geoGenerator(d));
+
   var xText = select(".xtext").text(article[state.xyear]);
   var yText = select(".ytext").text(article[state.yyear]);
+  var ySide = select(".yyear").text(state.yyear);
+  var xSide = select(".xyear").text(state.xyear);
 
   var xLabel =
     "Homicides per 100k inhabitants (" + state.xyear.toString() + ")";
@@ -124,6 +151,7 @@ export default function scatterplot(data, article) {
 
       var xLabels = svg.selectAll(".xlabel").data([xLabel]);
       var xText = select(".xtext").text(article[state.xyear]);
+      var xSide = select(".xyear").text(state.xyear);
 
       xLabels
         .enter()
@@ -174,6 +202,7 @@ export default function scatterplot(data, article) {
       update();
       var filteredData = filterData();
       var yText = select(".ytext").text(article[state.yyear]);
+      var ySide = select(".yyear").text(state.yyear);
 
       var yLabels = svg.selectAll(".ylabel").data([yLabel]);
       yLabels
@@ -272,13 +301,6 @@ export default function scatterplot(data, article) {
     .base(2)
     .range([innerHeight, 0]);
   const sizeScale = scaleSqrt().range([0, sizeMax]);
-
-  const colorDomain = Array.from(
-    data.reduce((acc, row) => acc.add(row.region), new Set())
-  );
-
-  const colorRange = ["#88a2b1", "#ca9a4f", "#10868d", "#855191", "#135a90"];
-  const colorScale = scaleOrdinal(colorDomain).range(colorRange);
 
   const xAxis = axisBottom().scale(xScale);
 

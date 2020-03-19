@@ -1,5 +1,7 @@
 /data/*
 !/data/homicides.*
 !/data/text.*
+!/data/states.*
+!/data/municipalities.*
 /.ipynb_checkpoints/
 node_modules
