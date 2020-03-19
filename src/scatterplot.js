@@ -27,22 +27,23 @@ export default function scatterplot(data, article, states, muns) {
   const colorRange = ["#88a2b1", "#ca9a4f", "#10868d", "#855191", "#135a90"];
   const colorScale = scaleOrdinal(colorDomain).range(colorRange);
 
-  const projection = geoAlbersUsa();
-  const geoGenerator = geoPath(projection);
+  const geoGenerator = geoPath();
 
-  const map = select(".map-area")
+  const mapRegions = select(".map-area")
     .attr("width", 300)
     .attr("height", 200);
 
-  map
-    .selectAll(".map-states")
+  mapRegions
+    .selectAll("path")
     .data(states.features)
     .enter()
     .append("path")
-    .attr("class", "map-states")
+    .attr("class", "map")
     .attr("stroke", "black")
     .attr("fill", d => colorScale(d.properties.region))
     .attr("d", d => geoGenerator(d));
+
+  console.log(mapRegions);
 
   var xText = select(".xtext").text(article[state.xyear]);
   var yText = select(".ytext").text(article[state.yyear]);
