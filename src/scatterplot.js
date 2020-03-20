@@ -151,7 +151,7 @@ export default function scatterplot(data, article, states, muns) {
       .data(munGeo.features)
       .enter()
       .append("circle")
-      .attr("fill", "#545351")
+      .attr("fill", "black")
       .attr("cx", d => projection([d.properties.lon, d.properties.lat])[0])
       .attr("cy", d => projection([d.properties.lon, d.properties.lat])[1])
       .attr("r", 5);
@@ -197,11 +197,13 @@ export default function scatterplot(data, article, states, muns) {
         .attr("cy", d => yScale(yValue(d)))
         .attr("r", d => sizeScale(sizeValue(d)))
         .attr("fill", d => colorScale(d.region))
-        .on("mouseover", tip.show)
-        .on("mouseover", d => showMun(d.key))
-        .on("mouseout", tip.hide)
+        .on("mouseover", function(d) {
+          showMun(d.key);
+          tip.show(d, this);
+        })
         .on("mouseout", function() {
           svg2.selectAll("circle").remove();
+          tip.hide();
         });
     });
 
@@ -257,11 +259,13 @@ export default function scatterplot(data, article, states, muns) {
         .attr("cy", d => yScale(yValue(d)))
         .attr("r", d => sizeScale(sizeValue(d)))
         .attr("fill", d => colorScale(d.region))
-        .on("mouseover", tip.show)
-        .on("mouseover", d => showMun(d.key))
-        .on("mouseout", tip.hide)
+        .on("mouseover", function(d) {
+          showMun(d.key);
+          tip.show(d, this);
+        })
         .on("mouseout", function() {
           svg2.selectAll("circle").remove();
+          tip.hide();
         });
     });
 
@@ -306,11 +310,13 @@ export default function scatterplot(data, article, states, muns) {
         .attr("fill", d => colorScale(d.region))
         .attr("opacity", 0.5)
         .attr("transform", `translate(${margin.left}, 0)`)
-        .on("mouseover", tip.show)
-        .on("mouseover", d => showMun(d.key))
-        .on("mouseout", tip.hide)
+        .on("mouseover", function(d) {
+          showMun(d.key);
+          tip.show(d, this);
+        })
         .on("mouseout", function() {
           svg2.selectAll("circle").remove();
+          tip.hide();
         });
     });
 
@@ -429,11 +435,11 @@ export default function scatterplot(data, article, states, muns) {
     .attr("transform", `translate(${margin.left}, 0)`)
     .on("mouseover", function(d) {
       showMun(d.key);
-      tip.show(d);
+      tip.show(d, this);
     })
     .on("mouseout", function() {
       svg2.selectAll("circle").remove();
-      tip.hide(d);
+      tip.hide();
     });
 
   g.call(tip);
