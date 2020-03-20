@@ -2,7 +2,7 @@ import { select } from "d3-selection";
 import { scaleLog, scaleSqrt, scaleOrdinal, scaleLinear } from "d3-scale";
 import { axisLeft, axisBottom } from "d3-axis";
 import { transition } from "d3-transition";
-import { geoPath, geoAlbersUsa } from "d3-geo";
+import { geoPath, geoConicConformal } from "d3-geo";
 import d3Tip from "d3-tip";
 
 export default function scatterplot(data, article, states, muns) {
@@ -27,23 +27,28 @@ export default function scatterplot(data, article, states, muns) {
   const colorRange = ["#88a2b1", "#ca9a4f", "#10868d", "#855191", "#135a90"];
   const colorScale = scaleOrdinal(colorDomain).range(colorRange);
 
-  const geoGenerator = geoPath();
+  const projection = geoConicConformal()
+    .rotate([102, 0])
+    .center([22, 15])
+    .parallels([17.5, 29.5])
+    .scale(800);
 
-  const mapRegions = select(".map-area")
-    .attr("width", 300)
-    .attr("height", 200);
+  const geoGenerator = geoPath(projection);
 
-  mapRegions
+  const svg2 = select(".map-area")
+    .append("svg")
+    .attr("width", 400)
+    .attr("height", 300);
+
+  svg2
     .selectAll("path")
     .data(states.features)
     .enter()
     .append("path")
     .attr("class", "map")
-    .attr("stroke", "black")
+    .attr("stroke", "gray")
     .attr("fill", d => colorScale(d.properties.region))
     .attr("d", d => geoGenerator(d));
-
-  console.log(mapRegions);
 
   var xText = select(".xtext").text(article[state.xyear]);
   var yText = select(".ytext").text(article[state.yyear]);
@@ -134,6 +139,24 @@ export default function scatterplot(data, article, states, muns) {
       });
   }
 
+  function showMun(munCode) {
+    var munGeo = {};
+    munGeo.crs = muns.crs;
+    munGeo.features = muns.features.filter(function(d) {
+      return d.properties.key === munCode;
+    });
+
+    var munMap = svg2
+      .selectAll("circle")
+      .data(munGeo.features)
+      .enter()
+      .append("circle")
+      .attr("fill", "#545351")
+      .attr("cx", d => projection([d.properties.lon, d.properties.lat])[0])
+      .attr("cy", d => projection([d.properties.lon, d.properties.lat])[1])
+      .attr("r", 5);
+  }
+
   var filteredData = filterData();
 
   const dropDownTextX = select(".drop-down")
@@ -175,7 +198,11 @@ export default function scatterplot(data, article, states, muns) {
         .attr("r", d => sizeScale(sizeValue(d)))
         .attr("fill", d => colorScale(d.region))
         .on("mouseover", tip.show)
-        .on("mouseout", tip.hide);
+        .on("mouseover", d => showMun(d.key))
+        .on("mouseout", tip.hide)
+        .on("mouseout", function() {
+          svg2.selectAll("circle").remove();
+        });
     });
 
   dropDownX
@@ -231,7 +258,11 @@ export default function scatterplot(data, article, states, muns) {
         .attr("r", d => sizeScale(sizeValue(d)))
         .attr("fill", d => colorScale(d.region))
         .on("mouseover", tip.show)
-        .on("mouseout", tip.hide);
+        .on("mouseover", d => showMun(d.key))
+        .on("mouseout", tip.hide)
+        .on("mouseout", function() {
+          svg2.selectAll("circle").remove();
+        });
     });
 
   dropDownY
@@ -276,7 +307,11 @@ export default function scatterplot(data, article, states, muns) {
         .attr("opacity", 0.5)
         .attr("transform", `translate(${margin.left}, 0)`)
         .on("mouseover", tip.show)
-        .on("mouseout", tip.hide);
+        .on("mouseover", d => showMun(d.key))
+        .on("mouseout", tip.hide)
+        .on("mouseout", function() {
+          svg2.selectAll("circle").remove();
+        });
     });
 
   dropDownSize
@@ -392,8 +427,14 @@ export default function scatterplot(data, article, states, muns) {
     .attr("fill", d => colorScale(d.region))
     .attr("opacity", 0.5)
     .attr("transform", `translate(${margin.left}, 0)`)
-    .on("mouseover", tip.show)
-    .on("mouseout", tip.hide);
+    .on("mouseover", function(d) {
+      showMun(d.key);
+      tip.show(d);
+    })
+    .on("mouseout", function() {
+      svg2.selectAll("circle").remove();
+      tip.hide(d);
+    });
 
   g.call(tip);
 
@@ -508,4 +549,4 @@ export default function scatterplot(data, article, states, muns) {
 
 // Sources:
 // https://bl.ocks.org/curran/ffcf1dac1f301cf7ec7559fa729b647f
-//
+// https://gis.stackexchange.com/questions/180675/d3-center-a-map-feature-using-correct-latitude-and-longitude-without-rotation
